@@ -1,8 +1,11 @@
 import { Properties } from './properties.interface';
+
 export interface Component {
-	name: string;
-	description: string;
-	type: string;
-	url: string;
-	properties: Properties[];
+	 category: string;
+	 subtitle: string;
+	 type: string;
+	 title: string;
+	 url: string;
+	 properties: Properties[];
+
 }
