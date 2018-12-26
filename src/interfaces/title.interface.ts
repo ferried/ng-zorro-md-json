@@ -1,4 +1,7 @@
 export interface Title {
-    name:string;
-    url:string;
+	name: string;
+	partUrl: string;
+	docUrl: string;
+	cnMd: string;
+	enMd: string;
 }
