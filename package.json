@@ -1,0 +1,20 @@
+{
+  "name": "ng-zorro-md-json",
+  "version": "1.0.0",
+  "description": "translate ng-zorro's md to json",
+  "main": "index.js",
+  "author": "ferried <harlancui@outlook.com>",
+  "license": "MIT",
+  "scripts": {
+    "build":"tsc --rootDir src --outDir dist"
+  },
+  "devDependencies": {
+    "husky": "^1.3.0",
+    "typescript": "^3.2.2"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "node ./scripts/git/commit-msg.js -E HUSKY_GIT_PARAMS"
+    }
+  }
+}
