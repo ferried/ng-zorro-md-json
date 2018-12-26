@@ -1,5 +1,6 @@
-import request from 'superagent';
+import { Reptile } from './reptile/reptile';
 
-request.get('https://github.com/NG-ZORRO/ng-zorro-antd/tree/master/components').end((err, res) => {
-	console.log(err, res);
-});
+const reptile: Reptile = new Reptile();
+reptile.getDocumentList().then((response)=>{
+    console.log(response);
+})
