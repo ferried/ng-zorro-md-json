@@ -41,11 +41,54 @@ export class DesignReptile {
         const response = await request.get(doc.cnAddress);
         console.log(`response from:${doc.cnAddress}`);
         console.log(`parsing component info:${doc.title}`);
+        doc = await this.compileHead(doc, response);
+        doc = await this.compileDesc(doc, response);
+        doc = await this.compileWhenUse(doc, response);
+        doc = await this.compileApis(doc, response);
+        return doc;
+    }
+
+    /**
+     * TODO:解析head
+     * @param doc
+     * @param response
+     */
+    private async compileHead(doc: Doc, response: any): Promise<Doc> {
         await cheerio.load(response.text)('article').find('table[data-table-type=yaml-metadata]')
             .map((index: number, element: CheerioElement) => {
                 console.log(element);
             });
         return doc;
+
     }
+
+    /**
+     * TODO:解析描述
+     * @param doc
+     * @param response
+     */
+    private async compileDesc(doc: Doc, response: any): Promise<Doc> {
+        return doc;
+    }
+
+
+    /**
+     * TODO:解析何时使用
+     * @param doc
+     * @param response
+     */
+    private async compileWhenUse(doc: Doc, response: any): Promise<Doc> {
+        return doc;
+    }
+
+    /**
+     * TODO:解析api列表
+     * @param doc
+     * @param response
+     */
+    private async compileApis(doc: Doc, response: any): Promise<Doc> {
+        return doc;
+    }
+
 
 }
