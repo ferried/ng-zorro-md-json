@@ -22,8 +22,8 @@ export class DesignReptile {
                     desc: '',
                     whenUse: '',
                     apis: [],
-                    cnAddress: `${NgAntDesign.MD_ADDRESS}${element.attribs.href}/doc/index.zh-CN.md`,
-                    enAddress: `${NgAntDesign.MD_ADDRESS}${element.attribs.href}/doc/index.en-US.md`
+                    cnAddress: `${NgAntDesign.MD_ADDRESS}${element.attribs.title}/doc/index.zh-CN.md`,
+                    enAddress: `${NgAntDesign.MD_ADDRESS}${element.attribs.title}/doc/index.en-US.md`
                 });
             }
         );
@@ -41,10 +41,10 @@ export class DesignReptile {
         const response = await request.get(doc.cnAddress);
         console.log(`response from:${doc.cnAddress}`);
         console.log(`parsing component info:${doc.title}`);
-        doc = await this.compileHead(doc, response);
-        doc = await this.compileDesc(doc, response);
-        doc = await this.compileWhenUse(doc, response);
-        doc = await this.compileApis(doc, response);
+        doc = await this.compileHead(doc, cheerio.load(response.text));
+        doc = await this.compileDesc(doc, cheerio.load(response.text));
+        doc = await this.compileWhenUse(doc, cheerio.load(response.text));
+        doc = await this.compileApis(doc, cheerio.load(response.text));
         return doc;
     }
 
@@ -53,11 +53,7 @@ export class DesignReptile {
      * @param doc
      * @param response
      */
-    private async compileHead(doc: Doc, response: any): Promise<Doc> {
-        await cheerio.load(response.text)('article').find('table[data-table-type=yaml-metadata]')
-            .map((index: number, element: CheerioElement) => {
-                console.log(element);
-            });
+    private async compileHead(doc: Doc, cheerio: CheerioStatic): Promise<Doc> {
         return doc;
 
     }
@@ -67,7 +63,7 @@ export class DesignReptile {
      * @param doc
      * @param response
      */
-    private async compileDesc(doc: Doc, response: any): Promise<Doc> {
+    private async compileDesc(doc: Doc, cheerio: CheerioStatic): Promise<Doc> {
         return doc;
     }
 
@@ -77,7 +73,7 @@ export class DesignReptile {
      * @param doc
      * @param response
      */
-    private async compileWhenUse(doc: Doc, response: any): Promise<Doc> {
+    private async compileWhenUse(doc: Doc, cheerio: CheerioStatic): Promise<Doc> {
         return doc;
     }
 
@@ -86,7 +82,7 @@ export class DesignReptile {
      * @param doc
      * @param response
      */
-    private async compileApis(doc: Doc, response: any): Promise<Doc> {
+    private async compileApis(doc: Doc, cheerio: CheerioStatic): Promise<Doc> {
         return doc;
     }
 

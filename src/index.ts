@@ -7,6 +7,8 @@ const designReptile: DesignReptile = new DesignReptile();
 const docs: Promise<Doc[]> = designReptile.componentList();
 docs.then((docs: Doc[]) => {
     docs.forEach((doc: Doc) => {
-        const complateDocPromise: Promise<Doc> = designReptile.completeDoc(doc);
+        designReptile.completeDoc(doc).then((doc: Doc) => {
+            console.log(doc);
+        });
     });
 });
