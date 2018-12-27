@@ -22,8 +22,8 @@ export class DesignReptile {
                     desc: '',
                     whenUse: '',
                     apis: [],
-                    cnAddress: `${NgAntDesign.ADDRESS}${element.attribs.href}/doc/index.zh-CN.md`,
-                    enAddress: `${NgAntDesign.ADDRESS}${element.attribs.href}/doc/index.en-US.md`
+                    cnAddress: `${NgAntDesign.MD_ADDRESS}${element.attribs.href}/doc/index.zh-CN.md`,
+                    enAddress: `${NgAntDesign.MD_ADDRESS}${element.attribs.href}/doc/index.en-US.md`
                 });
             }
         );
