@@ -1,5 +1,6 @@
 export interface Properties {
-    name: string;
+    name:string;
+    param: string;
     type: string [];
     description: string;
     defaultValue: any;
