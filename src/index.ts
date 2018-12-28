@@ -1,13 +1,14 @@
-import { Component } from './interfaces/component.interface';
-import { Title } from './interfaces/title.interface';
-import { Reptile } from './reptile/reptile';
+import {Doc} from './interfaces/doc';
+import {DesignReptile} from './reptile/design.reptile';
 
-const reptile: Reptile = new Reptile();
+const designReptile: DesignReptile = new DesignReptile();
 
-reptile.getDocumentList().then((titles: Title[]) => {
-	reptile.getComponents(titles).then((promises) => {
-		Promise.all(promises).then((component: Component[]) => {
-            reptile.setProp(component);
-		});
-	});
+// 获取文档component列表
+const docs: Promise<Doc[]> = designReptile.componentList();
+docs.then((docs: Doc[]) => {
+    docs.forEach((doc: Doc) => {
+        designReptile.completeDoc(doc).then((doc: Doc) => {
+            console.log(doc);
+        });
+    });
 });
