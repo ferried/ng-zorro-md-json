@@ -4,7 +4,9 @@ export interface Doc {
     subtitle: string;
     type: string;
     title: string;
-    hasPageDemo:boolean;
+    cols: string;
+    noinstant: string;
+    hasPageDemo: boolean;
     // 何时使用
     whenUse: string;
     // 描述

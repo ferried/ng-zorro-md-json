@@ -2,6 +2,7 @@ import cheerio from 'cheerio';
 import request from 'superagent';
 import {Doc} from '../interfaces/doc';
 import {NgAntDesign} from '../models/ng.ant.design';
+import defineProperty = Reflect.defineProperty;
 
 export class DesignReptile {
 
@@ -20,6 +21,8 @@ export class DesignReptile {
                         category: '',
                         subtitle: '',
                         type: '',
+                        cols: '',
+                        noinstant: '',
                         hasPageDemo: false,
                         desc: '',
                         whenUse: '',
@@ -65,15 +68,31 @@ export class DesignReptile {
      * @param doc
      * @param response
      */
-    private async compileHead(doc: Doc, cheerio: CheerioStatic): Promise<Doc> {
+    private async compileHead(doc: Doc, cheerioStatic: CheerioStatic): Promise<Doc> {
         try {
-            cheerio('table[data-table-type=yaml-metadata]')
-                .find('tbody')
-                .find('tr')
-                .find('td')
-                .map((index: number, element: CheerioElement) => {
-                    console.log(element);
-                });
+            const headKeys: string [] = [];
+            const headValues: string [] = [];
+            await cheerioStatic('table[data-table-type=yaml-metadata]')
+                .find('thead').find('tr').find('th').each(((index: number, element: CheerioElement) => {
+                        if (element.children[0].data) {
+                            headKeys.push(element.children[0].data);
+                        } else {
+                            headKeys.push('undefined');
+                        }
+                    })
+                );
+            await cheerioStatic('table[data-table-type=yaml-metadata]')
+                .find('tbody').find('tr').find('div').each(((index: number, element: CheerioElement) => {
+                        if (element.children[0].data) {
+                            headValues.push(element.children[0].data);
+                        } else {
+                            headValues.push('undefined');
+                        }
+                    })
+                );
+            headKeys.forEach(((value: string, index: number, array: string[]) => {
+                doc = Object.defineProperty(doc, value, {value: headValues[index]});
+            }));
             return doc;
         } catch (e) {
             console.error(e);
