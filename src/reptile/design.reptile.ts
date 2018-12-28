@@ -106,7 +106,17 @@ export class DesignReptile {
      * @param doc
      * @param response
      */
-    private async compileDesc(doc: Doc, cheerio: CheerioStatic): Promise<Doc> {
+    private async compileDesc(doc: Doc, cheerioStatic: CheerioStatic): Promise<Doc> {
+        try {
+            await cheerioStatic('table[data-table-type=yaml-metadata]').each(((index: number, element: CheerioElement) => {
+                if (element.next.next.name === 'p') {
+                    doc.desc = element.next.next.children[0].data as string;
+                }
+            }));
+        } catch (e) {
+            console.error(e);
+            return e;
+        }
         return doc;
     }
 
@@ -116,7 +126,24 @@ export class DesignReptile {
      * @param doc
      * @param response
      */
-    private async compileWhenUse(doc: Doc, cheerio: CheerioStatic): Promise<Doc> {
+    private async compileWhenUse(doc: Doc, cheerioStatic: CheerioStatic): Promise<Doc> {
+        let whenUse: string = '';
+        await cheerioStatic('article[itemprop=text]')
+            .find('h2').find('a[id=user-content-何时使用]')
+            .each(((index: number, element: CheerioElement) => {
+                if (element.parent.next.next.name === 'p') {
+                    element.parent.next.next.children.map(child => {
+                        whenUse += child.data+'\n';
+                    });
+                } else if (element.parent.next.next.name = 'ul') {
+                    element.parent.next.next.children.filter(child => {
+                        return child.type === 'tag';
+                    }).map(child => {
+                        whenUse += child.children[0].data+'\n' ;
+                    });
+                }
+            }));
+        doc.whenUse = whenUse;
         return doc;
     }
 
@@ -128,6 +155,5 @@ export class DesignReptile {
     private async compileApis(doc: Doc, cheerio: CheerioStatic): Promise<Doc> {
         return doc;
     }
-
 
 }
